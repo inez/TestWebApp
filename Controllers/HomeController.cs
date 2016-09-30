@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TestWebApp.Models;
 
 namespace TestWebApp.Controllers
 {
@@ -10,6 +11,13 @@ namespace TestWebApp.Controllers
     {
         public IActionResult Index()
         {
+            var context = new TestDbContext();
+            context.Database.EnsureCreated(); // create database
+
+            var user = new User { Name = "Test: " + DateTime.Now.ToString() };
+            context.Add(user);
+            context.SaveChanges();
+
             return View();
         }
 
